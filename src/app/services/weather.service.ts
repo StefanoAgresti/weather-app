@@ -11,7 +11,7 @@ export class WeatherService {
   constructor(private http: HttpClient) {}
 
   getWeatherSvc(city: string) {
-    const weather_forecast = `http://api.weatherapi.com/v1/forecast.json?key=${this.apiKey}&q=${city}&days=3`;
+    const weather_forecast = `https://api.weatherapi.com/v1/forecast.json?key=${this.apiKey}&q=${city}&days=3`;
 
     return this.http.get(weather_forecast);
   }
