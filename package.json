@@ -18,6 +18,8 @@
     "@angular/platform-browser": "^14.1.0",
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
+    "@ng-web-apis/common": "^3.0.6",
+    "@ng-web-apis/geolocation": "^3.0.6",
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.3",
     "rxjs": "~7.5.0",

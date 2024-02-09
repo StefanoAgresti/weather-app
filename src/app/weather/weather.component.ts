@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../services/weather.service';
 
+import { GeolocationService } from '@ng-web-apis/geolocation';
+import { take } from 'rxjs';
+
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
@@ -13,13 +16,33 @@ export class WeatherComponent implements OnInit {
   forecastHours: any;
   error: any;
   lastUpdated!: Date;
+  currPosition!: any;
+  q!: any;
 
-  constructor(private weatherService: WeatherService) {}
+  constructor(
+    private weatherService: WeatherService,
+    private readonly geolocation$: GeolocationService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.currPosition);
+  }
+
+  getLocation() {
+    this.geolocation$.pipe(take(1)).subscribe((position) => {
+      console.log(position);
+      this.currPosition = `${position.coords.latitude},${position.coords.longitude}`;
+    });
+  }
 
   getWeather() {
-    this.weatherService.getWeatherSvc(this.city).subscribe({
+    if (this.currPosition) {
+      this.q = this.currPosition;
+    } else {
+      this.q = this.city;
+    }
+
+    this.weatherService.getWeatherSvc(this.q).subscribe({
       next: (data) => {
         this.weatherData = data;
         this.error = false;
@@ -59,6 +82,7 @@ export class WeatherComponent implements OnInit {
         this.weatherData.current.last_updated;
 
         this.city = '';
+        this.currPosition = '';
         console.log(this.weatherData);
       },
       error: (err: any) => {
