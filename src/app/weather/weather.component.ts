@@ -1,48 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../services/weather.service';
 
-import { GeolocationService } from '@ng-web-apis/geolocation';
-import { take } from 'rxjs';
-
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
   styleUrls: ['./weather.component.css'],
 })
 export class WeatherComponent implements OnInit {
-  city: string = '';
+  city: string = 'Rome';
   weatherData: any;
   currentDayForecast: any;
   forecastHours: any;
   error: any;
   lastUpdated!: Date;
-  currPosition!: any;
-  q!: any;
 
-  constructor(
-    private weatherService: WeatherService,
-    private readonly geolocation$: GeolocationService
-  ) {}
+  constructor(private weatherService: WeatherService) {}
 
   ngOnInit(): void {
-    console.log(this.currPosition);
-  }
-
-  getLocation() {
-    this.geolocation$.pipe(take(1)).subscribe((position) => {
-      console.log(position);
-      this.currPosition = `${position.coords.latitude},${position.coords.longitude}`;
-    });
+    this.getWeather();
   }
 
   getWeather() {
-    if (this.currPosition) {
-      this.q = this.currPosition;
-    } else {
-      this.q = this.city;
-    }
-
-    this.weatherService.getWeatherSvc(this.q).subscribe({
+    this.weatherService.getWeatherSvc(this.city).subscribe({
       next: (data) => {
         this.weatherData = data;
         this.error = false;
@@ -82,18 +61,16 @@ export class WeatherComponent implements OnInit {
         this.weatherData.current.last_updated;
 
         this.city = '';
-        this.currPosition = '';
         console.log(this.weatherData);
       },
       error: (err: any) => {
-        console.log(err.error.error);
-        this.weatherData = '';
-        this.city = '';
-
         if (err.error.error.code === 1003) {
           err.error.error.message = 'You need to type a city.';
-        }
-        this.error = err.error.error;
+          this.error = err.error.error;
+        } else this.error = err.error.error;
+
+        console.log(this.error);
+        this.city = '';
       },
     });
   }

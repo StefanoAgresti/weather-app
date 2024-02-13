@@ -1,100 +1,47 @@
 <!-- api docs -> https://www.weatherapi.com/docs/ -->
 
 <div
-  *ngIf="!weatherData"
-  class="flex flex-col justify-center items-center h-screen bg-platinum"
->
-  <section class="text-center">
-    <h1 class="text-4xl mb-3">Weather App</h1>
-    <h2 class="mb-5 text-xl">
-      Get the current weather and weather forecasts for the next 2 days.
-    </h2>
-  </section>
-  <div class="flex flex-col items-center">
-    <form class="flex" *ngIf="!weatherData" (ngSubmit)="getWeather()">
-      <input
-        type="text"
-        name="city"
-        [(ngModel)]="city"
-        class="border p-5 m-4 rounded-xl"
-        placeholder="Type a city..."
-        *ngIf="!currPosition"
-      />
-      <h1
-        class="text-xl mr-3 bg-white border p-5 m-4 rounded-xl"
-        *ngIf="currPosition"
-      >
-        Your coords: {{ currPosition }}
-      </h1>
-      <button type="submit" class="outline-none">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-8 h-8"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-          />
-        </svg>
-      </button>
-    </form>
-    <span class="text-xl" *ngIf="!currPosition">OR</span>
-    <button
-      class="bg-white border p-5 m-4 rounded-xl"
-      *ngIf="!currPosition"
-      (click)="getLocation()"
-    >
-      Get Location
-    </button>
-  </div>
-
-  <div *ngIf="error">
-    <div class="bg-red-500 p-3 md:p-5 m-3 md:m-5 border rounded-xl text-xl">
-      {{ error.message }} Try again
-    </div>
-  </div>
-</div>
-
-<div
   *ngIf="weatherData"
   class="h-full xl:h-screen xl:p-32 p-10 flex flex-col xl:flex-row bg-platinum"
 >
   <div
     class="xl:w-3/4 w-full p-4 bg-slate-50 border xl:rounded-s-xl max-xl:rounded-t-xl"
   >
-    <form
-      (ngSubmit)="getWeather()"
-      class="flex justify-center xl:justify-start"
-    >
-      <input
-        type="text"
-        name="city"
-        [(ngModel)]="city"
-        placeholder="Type a city..."
-        class="border rounded-xl p-2 m-4"
-      />
-      <button type="submit">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-8 h-8"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-          />
-        </svg>
-      </button>
-    </form>
+    <div class="flex items-center">
+      <form
+        (ngSubmit)="getWeather()"
+        class="flex justify-center xl:justify-start"
+      >
+        <input
+          type="text"
+          name="city"
+          [(ngModel)]="city"
+          placeholder="Type a city..."
+          class="border rounded-xl p-2 m-4"
+        />
+        <button type="submit">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-8 h-8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+            />
+          </svg>
+        </button>
+      </form>
+      <ng-container
+        ><p *ngIf="error" class="bg-red-500 p-3 ml-5 rounded-xl">
+          {{ error.message }}
+        </p>
+      </ng-container>
+    </div>
 
     <h1 class="text-2xl font-bold flex justify-center">
       {{ weatherData.location.name }}, {{ weatherData.location.country }}
@@ -205,9 +152,9 @@
     <section class="mt-12">
       <h2 class="text-3xl text-dim_gray">Hourly Forecast</h2>
       <div class="grid xl:grid-cols-2 grid-cols-3 gap-5 m-10">
-        <ng-container *ngFor="let hour of forecastHours; let i = index">
+        <div *ngFor="let hour of forecastHours; let i = index">
           <div
-            class="border rounded-xl p-3 flex flex-col items-center"
+            class="border rounded-xl p-3 flex flex-col items-center bg-slate-50"
             *ngIf="i < 6"
           >
             <p class="xl:text-xl">{{ hour.time }}</p>
@@ -218,7 +165,7 @@
             />
             <p class="xl:text-xl">{{ hour.temp_c }} °C</p>
           </div>
-        </ng-container>
+        </div>
       </div>
     </section>
   </div>
