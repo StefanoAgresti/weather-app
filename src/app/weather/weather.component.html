@@ -7,7 +7,17 @@
   <div
     class="xl:w-3/4 w-full p-4 bg-slate-50 border xl:rounded-s-xl max-xl:rounded-t-xl"
   >
-    <div class="flex items-center">
+    <div class="flex flex-col lg:flex-row items-center">
+      <figure>
+        <a
+          href="https://www.weatherapi.com/"
+          target="_blank"
+          title="Free Weather API"
+          ><img
+            src="//cdn.weatherapi.com/v4/images/weatherapi_logo.png"
+            alt="Weather data by WeatherAPI.com"
+        /></a>
+      </figure>
       <form
         (ngSubmit)="getWeather()"
         class="flex justify-center xl:justify-start"
@@ -37,7 +47,7 @@
         </button>
       </form>
       <ng-container
-        ><p *ngIf="error" class="bg-red-500 p-3 ml-5 rounded-xl">
+        ><p *ngIf="error" class="bg-red-500 p-2 my-4 lg:ml-5 rounded-xl">
           {{ error.message }}
         </p>
       </ng-container>
@@ -50,7 +60,7 @@
       {{ weatherData.location.localtime | date : "EEEE, MMMM d" }}
     </h2>
 
-    <div class="flex justify-center items-center py-14 gap-3">
+    <div class="flex justify-center items-center py-7 lg:py-14 gap-3">
       <section>
         <img
           [src]="weatherData.current.condition.icon"
@@ -130,7 +140,7 @@
         *ngFor="let forecast of weatherData.forecast.forecastday"
         class="border rounded-xl flex flex-col items-center text-center p-5"
       >
-        <p>{{ forecast.date | date : "EEEE" }}</p>
+        <p>{{ forecast.date | date : "E" }}</p>
         <p>{{ forecast.day.maxtemp_c }} °C</p>
         <p>{{ forecast.day.mintemp_c }} °C</p>
         <img
