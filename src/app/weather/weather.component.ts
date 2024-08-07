@@ -44,24 +44,12 @@ export class WeatherComponent implements OnInit {
           }
         );
 
-        if (this.currentDayForecast) {
-          const currentTime = new Date().toLocaleTimeString('it-IT', {
-            hour: 'numeric',
-            minute: 'numeric',
-          });
-
-          //return the hours ahead of the current one
-          this.forecastHours = this.currentDayForecast.hour.filter((h: any) => {
-            h.time = this.weatherService.formatFcDateHourTime(h.time);
-
-            return parseInt(h.time) > parseInt(currentTime);
-          });
-        }
-
+        this.forecastHours = this.currentDayForecast.hour.filter((h: any) => {
+          h.time = this.weatherService.formatFcDateHourTime(h.time);
+          return h.time;
+        });
         this.weatherData.current.last_updated;
-
         this.city = '';
-        console.log(this.weatherData);
       },
       error: (err: any) => {
         if (err.error.error.code === 1003) {
