@@ -15,6 +15,12 @@ The Weather App project is a web application built with Angular that uses the We
 
 ## Configuration
 
+- Run the following command. This will install all the dependencies listed in the package.json file.
+
+```
+npm install
+```
+
 - To use the application, replace the WeatherAPI.com API key in the `src/environments/environment.ts` file with a valid key.
 - Make sure you have Node.js and Angular CLI installed on your system.
 
