@@ -1,27 +1,38 @@
-# WeatherApp
+# Weather App Project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.12.
+The Weather App project is a web application built with Angular that uses the WeatherAPI.com API to provide real-time weather information.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Display current weather conditions for a selected city
+- 3-day weather forecast
+- Search for weather conditions by city
 
-## Code scaffolding
+## Technologies Used
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular for creating the user interface and managing HTTP requests
+- WeatherAPI.com for weather information
 
-## Build
+## Configuration
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- To use the application, replace the WeatherAPI.com API key in the `src/environments/environment.ts` file with a valid key.
+- Make sure you have Node.js and Angular CLI installed on your system.
 
-## Running unit tests
+## Obtaining an API Key from WeatherAPI.com
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+To obtain an API Key from WeatherAPI.com, follow these steps:
 
-## Running end-to-end tests
+1. Go to the WeatherAPI.com website and click on "Sign Up" to create an account.
+2. Fill out the registration and verify yout email to activate your account.
+3. Once your account is activated, an API Key is automatically generated
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Using the API Key
 
-## Further help
+1. Create a new folder named `environments` in the `src` directory.
+2. Inside the `environments` folder, create two new files: `environment.ts` and `environment.prod.ts`.
+3. Copy the contents of the .env.example file into the newly created files.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Running the Application
+
+- Run `ng serve` in the project directory to start the application in development mode.
+- Open your browser and navigate to `http://localhost:4200` to view the application.
