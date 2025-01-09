@@ -1,0 +1,14 @@
+<div class="flex justify-center gap-3 xl:gap-5">
+  <div
+    *ngFor="let forecast of weatherData.forecast.forecastday"
+    class="border rounded-xl flex flex-col items-center text-center p-5"
+  >
+    <p>{{ forecast.date }}</p>
+    <p>{{ forecast.day.maxtemp_c }}°</p>
+    <p>{{ forecast.day.mintemp_c }}°</p>
+    <img
+      [src]="forecast.day.condition.icon"
+      [alt]="forecast.day.condition.text"
+    />
+  </div>
+</div>

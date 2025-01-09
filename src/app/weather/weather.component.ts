@@ -1,31 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { WeatherService } from '../services/weather.service';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
-  styleUrls: ['./weather.component.css'],
+  styles: [],
 })
 export class WeatherComponent implements OnInit {
-  city: string = 'Rome';
   weatherData: any;
   currentDayForecast: any;
-  forecastHours: any;
-  error: any;
-  lastUpdated!: Date;
+  forecastHours: any[] = [];
+
+  @ViewChild(SearchBarComponent) searchBar!: SearchBarComponent;
 
   constructor(private weatherService: WeatherService) {}
 
   ngOnInit(): void {
-    this.getWeather();
+    this.getWeather('Rome');
   }
 
-  getWeather() {
-    this.weatherService.getWeatherSvc(this.city).subscribe({
+  getWeather(city: string) {
+    this.weatherService.getWeatherSvc(city).subscribe({
       next: (data) => {
+        if (this.searchBar) {
+          this.searchBar.setError(null);
+        }
         this.weatherData = data;
-        this.error = false;
-
         //current day date format
         this.weatherData.location.localtime =
           this.weatherService.formatLocalTime(
@@ -43,22 +44,19 @@ export class WeatherComponent implements OnInit {
             return day.date === this.weatherData.location.localtime;
           }
         );
-
+        //get forecast hours for the current day
         this.forecastHours = this.currentDayForecast.hour.filter((h: any) => {
           h.time = this.weatherService.formatFcDateHourTime(h.time);
           return h.time;
         });
-        this.weatherData.current.last_updated;
-        this.city = '';
       },
       error: (err: any) => {
         if (err.error.error.code === 1003) {
           err.error.error.message = 'You need to type a city.';
-          this.error = err.error.error;
-        } else this.error = err.error.error;
-
-        console.log(this.error);
-        this.city = '';
+        } else {
+          this.searchBar.setError(err.error.error);
+          console.log(err.error.error);
+        }
       },
     });
   }

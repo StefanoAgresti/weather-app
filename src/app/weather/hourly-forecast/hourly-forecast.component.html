@@ -1,0 +1,18 @@
+<section class="mt-12">
+  <h2 class="text-3xl text-dim_gray">Hourly Forecast</h2>
+  <div
+    class="grid grid-flow-col grid-rows-2 auto-cols-auto overflow-x-auto xl:grid-cols-2 xl:grid-flow-row gap-5 m-10"
+  >
+    <div *ngFor="let hour of forecastHours">
+      <div class="border rounded-xl p-3 flex flex-col items-center bg-slate-50">
+        <p class="xl:text-xl">{{ hour.time }}</p>
+        <img
+          style="width: 70px"
+          [src]="hour.condition.icon"
+          [alt]="hour.condition.text"
+        />
+        <p class="xl:text-xl">{{ hour.temp_c }}°</p>
+      </div>
+    </div>
+  </div>
+</section>
